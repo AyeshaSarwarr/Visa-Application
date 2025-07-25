@@ -323,12 +323,13 @@ export default function AdminDashboard() {
                           <Edit className="w-4 h-4" />
                         </Button>
                         <Button
-                          size="sm"
-                          variant="secondary"
-                          onClick={() => handleSendMail(application)}
-                        >
-                          Send Mail
-                        </Button>
+  size="sm"
+  className="bg-gray-100 text-black hover:bg-gray-300 transition duration-150"
+  onClick={() => handleSendMail(application)}
+>
+  Send Mail
+</Button>
+
                       </div>
                     </div>
                   ))}

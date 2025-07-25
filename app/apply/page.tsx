@@ -17,6 +17,9 @@ import Header from "@/components/shared/header"
 import Footer from "@/components/shared/footer"
 
 export default function ApplyPage() {
+  const [successMessage, setSuccessMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
+
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
@@ -64,6 +67,7 @@ export default function ApplyPage() {
 
       if (response.ok) {
         const result = await response.json()
+        setSuccessMessage(`✅ Application Submitted Successfully! Tracking ID: ${result.trackingId}`)
         toast({
           title: "Application Submitted Successfully!",
           description: `Your tracking ID is: ${result.trackingId}. Please save this for future reference.`,
@@ -98,6 +102,7 @@ export default function ApplyPage() {
         throw new Error("Failed to submit application")
       }
     } catch (error) {
+      setErrorMessage("❌ Failed to submit application. Please try again.")
       toast({
         title: "Error",
         description: "Failed to submit application. Please try again.",
@@ -401,6 +406,19 @@ export default function ApplyPage() {
                 <Button type="submit" disabled={isSubmitting} className="bg-red-600 hover:bg-red-700">
                   {isSubmitting ? "Submitting..." : "Get My Free Assessment"}
                 </Button>
+                {successMessage && (
+  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
+    <strong className="font-bold">Success! </strong>
+    <span className="block sm:inline">{successMessage}</span>
+  </div>
+)}
+{errorMessage && (
+  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+    <strong className="font-bold">Error! </strong>
+    <span className="block sm:inline">{errorMessage}</span>
+  </div>
+)}
+
               </div>
             </form>
           </CardContent>
